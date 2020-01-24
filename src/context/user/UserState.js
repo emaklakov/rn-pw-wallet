@@ -20,7 +20,7 @@ export const UserState = ({ children }) => {
 
   const [state, dispatch] = useReducer(userReducer, initialState);
 
-  const signupUser = async (username, password, email) => {
+  const signupUser = async (username, email, password) => {
     showLoader();
     clearError();
     try {
@@ -31,17 +31,14 @@ export const UserState = ({ children }) => {
       });
 
       const currentUser = {
-        id_token:
-          'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VybmFtZSI6IkFuaW1hbCBQbGFuZXQgVXNlciIsImVtYWlsIjoiMUAxLjEiLCJpZCI6MywiYmFsYW5jZSI6NTAwLCJpYXQiOjE0ODE1ODQ4ODksImV4cCI6MTQ4MTYwMjg4OX0.h4CzCxTOMRk6S8juxM0tRc5pql99XkXlR09pUzVMH9I',
+        id_token: data.id_token,
         username,
         email
       };
 
-      console.log('currentUser', currentUser);
-
-      dispatch({ type: SIGNUP_USER, currentUser });
+      dispatch({ type: SIGNUP_USER, currentUser: currentUser });
     } catch (e) {
-      showError('Что-пошло не так...');
+      showError(e.message);
       console.log(e);
     } finally {
       hideLoader();

@@ -7,8 +7,6 @@ import { AppNavigation } from './navigation/AppNavigation';
 export const MainLayout = () => {
   const { currentUser } = useContext(UserContext);
 
-  console.log(currentUser);
-
   return (
     <Container>
       {currentUser && currentUser.id_token ? (
