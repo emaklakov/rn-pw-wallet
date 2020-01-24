@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { AppLoading } from 'expo';
-import { Container, Content } from 'native-base';
-import { AppNavigation } from './src/navigation/AppNavigation';
+import { MainLayout } from './src/MainLayout';
 import { bootstrap } from './src/bootstrap';
+import { UserState } from './src/context/user/UserState';
 
 export default function App() {
   const [isReady, setIsReady] = useState(false);
@@ -18,8 +18,8 @@ export default function App() {
   }
 
   return (
-    <Container>
-      <AppNavigation />
-    </Container>
+    <UserState>
+      <MainLayout />
+    </UserState>
   );
 }

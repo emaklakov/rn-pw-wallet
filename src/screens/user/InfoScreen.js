@@ -1,5 +1,6 @@
 import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
+import { LogOutButton } from '../../components/LogOutButton';
 
 export const InfoScreen = ({}) => {
   return (
@@ -7,6 +8,13 @@ export const InfoScreen = ({}) => {
       <Text>InfoScreen</Text>
     </View>
   );
+};
+
+InfoScreen.navigationOptions = ({}) => {
+  return {
+    headerTitle: 'Info',
+    headerRight: () => <LogOutButton />
+  };
 };
 
 const styles = StyleSheet.create({

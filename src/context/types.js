@@ -1,0 +1,10 @@
+export const LOGIN_USER = 'LOGIN_USER';
+export const SIGNUP_USER = 'SIGNUP_USER';
+export const LOGOUT_USER = 'LOGOUT_USER';
+export const VIEW_USER = 'VIEW_USER';
+export const ADD_TRANSACTION = 'ADD_TRANSACTION';
+export const FETCH_TRANSACTIONS = 'FETCH_TRANSACTIONS';
+export const SHOW_LOADER = 'SHOW_LOADER';
+export const HIDE_LOADER = 'HIDE_LOADER';
+export const SHOW_ERROR = 'SHOW_ERROR';
+export const CLEAR_ERROR = 'CLEAR_ERROR';

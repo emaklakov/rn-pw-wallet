@@ -1,11 +1,49 @@
-import React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import React, { useContext } from 'react';
+import { UserContext } from '../../context/user/userContext';
+import { StyleSheet } from 'react-native';
+import {
+  Content,
+  Form,
+  Item,
+  Input,
+  Label,
+  Button,
+  Text,
+  Icon
+} from 'native-base';
 
 export const SignUpScreen = ({}) => {
+  const { signupUser, loading, error } = useContext(UserContext);
+
+  const signUp = () => {
+    signupUser('1', '1', '1');
+  };
+
   return (
-    <View style={styles.center}>
-      <Text>SignUpScreen</Text>
-    </View>
+    <Content padder style={styles.content}>
+      <Form>
+        <Item floatingLabel>
+          <Label>Username</Label>
+          <Input />
+        </Item>
+        <Item floatingLabel>
+          <Label>Email</Label>
+          <Input />
+        </Item>
+        <Item floatingLabel>
+          <Label>Password</Label>
+          <Input />
+        </Item>
+        <Item floatingLabel>
+          <Label>Password Confirm</Label>
+          <Input />
+        </Item>
+        <Button block onPress={signUp} style={styles.login}>
+          <Icon name='ios-person-add' />
+          <Text>Sign Up</Text>
+        </Button>
+      </Form>
+    </Content>
   );
 };
 
@@ -14,9 +52,10 @@ SignUpScreen.navigationOptions = {
 };
 
 const styles = StyleSheet.create({
-  center: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center'
+  content: {
+    flex: 1
+  },
+  login: {
+    marginTop: 45
   }
 });

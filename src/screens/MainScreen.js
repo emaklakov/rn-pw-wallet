@@ -11,12 +11,11 @@ export const MainScreen = ({ navigation }) => {
     navigation.navigate('SignUp');
   };
 
-  const goToInfo = () => {
-    navigation.navigate('Info');
-  };
-
   return (
     <Content padder style={styles.content}>
+      <View style={styles.contentTitle}>
+        <Text style={styles.title}>PW Wallet</Text>
+      </View>
       <View style={styles.contentImage}>
         <Image
           style={styles.wallet}
@@ -28,10 +27,6 @@ export const MainScreen = ({ navigation }) => {
           <Icon name='ios-log-in' />
           <Text>Log In</Text>
         </Button>
-        <Button block onPress={goToInfo} style={styles.login}>
-          <Icon name='ios-log-in' />
-          <Text>Info</Text>
-        </Button>
         <Button bordered block onPress={goToSignUp}>
           <Icon name='ios-person-add' />
           <Text>Sign Up</Text>
@@ -39,10 +34,6 @@ export const MainScreen = ({ navigation }) => {
       </View>
     </Content>
   );
-};
-
-MainScreen.navigationOptions = {
-  headerTitle: 'PW Wallet'
 };
 
 const styles = StyleSheet.create({
@@ -54,11 +45,18 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     height: 400
   },
+  contentTitle: {
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+  title: {
+    fontSize: 30
+  },
   wallet: {
     width: 300,
     height: 300
   },
   login: {
-    marginBottom: 15
+    marginBottom: 25
   }
 });

@@ -1,5 +1,6 @@
 import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
+import { LogOutButton } from '../../components/LogOutButton';
 
 export const CreateScreen = ({}) => {
   return (
@@ -10,7 +11,8 @@ export const CreateScreen = ({}) => {
 };
 
 CreateScreen.navigationOptions = {
-  headerTitle: 'Create payment'
+  headerTitle: 'Create payment',
+  headerRight: () => <LogOutButton />
 };
 
 const styles = StyleSheet.create({

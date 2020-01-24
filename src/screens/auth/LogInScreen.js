@@ -1,11 +1,36 @@
 import React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { StyleSheet } from 'react-native';
+import {
+  Content,
+  Form,
+  Item,
+  Input,
+  Label,
+  Button,
+  Text,
+  Icon
+} from 'native-base';
 
 export const LogInScreen = ({}) => {
+  const logIn = () => {};
+
   return (
-    <View style={styles.center}>
-      <Text>LogInScreen</Text>
-    </View>
+    <Content padder style={styles.content}>
+      <Form>
+        <Item floatingLabel>
+          <Label>Email</Label>
+          <Input />
+        </Item>
+        <Item floatingLabel>
+          <Label>Password</Label>
+          <Input />
+        </Item>
+        <Button block onPress={logIn} style={styles.login}>
+          <Icon name='ios-log-in' />
+          <Text>Log In</Text>
+        </Button>
+      </Form>
+    </Content>
   );
 };
 
@@ -14,9 +39,10 @@ LogInScreen.navigationOptions = {
 };
 
 const styles = StyleSheet.create({
-  center: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center'
+  content: {
+    flex: 1
+  },
+  login: {
+    marginTop: 45
   }
 });
