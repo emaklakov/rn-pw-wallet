@@ -3,6 +3,7 @@ import { Http } from '../../http';
 import { UserContext } from './userContext';
 import { userReducer } from './userReducer';
 import {
+  LOGIN_USER,
   SIGNUP_USER,
   LOGOUT_USER,
   SHOW_LOADER,
@@ -19,6 +20,30 @@ export const UserState = ({ children }) => {
   };
 
   const [state, dispatch] = useReducer(userReducer, initialState);
+
+  const loginUser = async (email, password) => {
+    showLoader();
+    clearError();
+    try {
+      const data = await Http.post('sessions/create', {
+        password,
+        email
+      });
+
+      const currentUser = {
+        id_token: data.id_token,
+        username: '',
+        email
+      };
+
+      dispatch({ type: LOGIN_USER, currentUser: currentUser });
+    } catch (e) {
+      showError(e.message);
+      console.log(e);
+    } finally {
+      hideLoader();
+    }
+  };
 
   const signupUser = async (username, email, password) => {
     showLoader();
@@ -61,6 +86,7 @@ export const UserState = ({ children }) => {
         currentUser: state.currentUser,
         loading: state.loading,
         error: state.error,
+        loginUser,
         signupUser,
         logoutUser
       }}

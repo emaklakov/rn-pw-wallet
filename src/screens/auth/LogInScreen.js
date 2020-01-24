@@ -1,5 +1,6 @@
-import React from 'react';
-import { StyleSheet } from 'react-native';
+import React, { useContext, useState } from 'react';
+import { UserContext } from '../../context/user/userContext';
+import { StyleSheet, View } from 'react-native';
 import {
   Content,
   Form,
@@ -10,26 +11,39 @@ import {
   Text,
   Icon
 } from 'native-base';
+import { AppLoader } from '../../components/AppLoader';
 
 export const LogInScreen = ({}) => {
-  const logIn = () => {};
+  const { loginUser, loading, error } = useContext(UserContext);
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const logIn = () => {
+    loginUser(email, password);
+  };
+
+  if (loading) {
+    return <AppLoader />;
+  }
 
   return (
     <Content padder style={styles.content}>
       <Form>
         <Item floatingLabel>
           <Label>Email</Label>
-          <Input />
+          <Input value={email} onChangeText={setEmail} />
         </Item>
         <Item floatingLabel>
           <Label>Password</Label>
-          <Input />
+          <Input value={password} onChangeText={setPassword} />
         </Item>
         <Button block onPress={logIn} style={styles.login}>
           <Icon name='ios-log-in' />
           <Text>Log In</Text>
         </Button>
       </Form>
+      <View style={styles.errorContent}>
+        <Text style={styles.errorText}>{error}</Text>
+      </View>
     </Content>
   );
 };
@@ -44,5 +58,12 @@ const styles = StyleSheet.create({
   },
   login: {
     marginTop: 45
+  },
+  errorContent: {
+    marginTop: 25
+  },
+  errorText: {
+    fontSize: 20,
+    color: 'red'
   }
 });

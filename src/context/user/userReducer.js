@@ -1,4 +1,5 @@
 import {
+  LOGIN_USER,
   SIGNUP_USER,
   LOGOUT_USER,
   SHOW_LOADER,
@@ -8,6 +9,10 @@ import {
 } from '../types';
 
 const handlers = {
+  [LOGIN_USER]: (state, { currentUser }) => ({
+    ...state,
+    currentUser: currentUser
+  }),
   [SIGNUP_USER]: (state, { currentUser }) => ({
     ...state,
     currentUser: currentUser
