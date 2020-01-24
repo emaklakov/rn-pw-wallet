@@ -1,7 +1,8 @@
-import React, { useState } from "react";
-import { Text, View } from "react-native";
-import { AppLoading } from "expo";
-import { bootstrap } from "./src/bootstrap";
+import React, { useState } from 'react';
+import { AppLoading } from 'expo';
+import { Container, Content } from 'native-base';
+import { AppNavigation } from './src/navigation/AppNavigation';
+import { bootstrap } from './src/bootstrap';
 
 export default function App() {
   const [isReady, setIsReady] = useState(false);
@@ -17,8 +18,8 @@ export default function App() {
   }
 
   return (
-    <View>
-      <Text>Open up App.js to start working on your app!</Text>
-    </View>
+    <Container>
+      <AppNavigation />
+    </Container>
   );
 }
