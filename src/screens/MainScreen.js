@@ -12,31 +12,6 @@ export class MainScreen extends React.Component {
   };
 
   render() {
-    const styles = StyleSheet.create({
-      content: {
-        flex: 1
-      },
-      contentImage: {
-        justifyContent: 'center',
-        alignItems: 'center',
-        height: 400
-      },
-      contentTitle: {
-        justifyContent: 'center',
-        alignItems: 'center'
-      },
-      title: {
-        fontSize: 30
-      },
-      wallet: {
-        width: 300,
-        height: 300
-      },
-      login: {
-        marginBottom: 25
-      }
-    });
-
     return (
       <Content padder style={styles.content}>
         <View style={styles.contentTitle}>
@@ -62,3 +37,28 @@ export class MainScreen extends React.Component {
     );
   }
 }
+
+const styles = StyleSheet.create({
+  content: {
+    flex: 1
+  },
+  contentImage: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    height: 400
+  },
+  contentTitle: {
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+  title: {
+    fontSize: 30
+  },
+  wallet: {
+    width: 300,
+    height: 300
+  },
+  login: {
+    marginBottom: 25
+  }
+});

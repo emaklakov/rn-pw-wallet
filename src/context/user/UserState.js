@@ -7,6 +7,7 @@ import {
   SIGNUP_USER,
   LOGOUT_USER,
   FETCH_USER,
+  FETCH_TRANSACTIONS,
   SHOW_LOADER,
   HIDE_LOADER,
   SHOW_ERROR,
@@ -16,6 +17,7 @@ import {
 export const UserState = ({ children }) => {
   const initialState = {
     currentUser: null,
+    transactions: [],
     loading: false,
     error: null
   };
@@ -101,6 +103,25 @@ export const UserState = ({ children }) => {
     }
   };
 
+  const fetchTransactions = async () => {
+    showLoader();
+    clearError();
+    try {
+      const data = await Http.get(
+        'api/protected/transactions',
+        state.currentUser.id_token
+      );
+
+      const trans_token = data.trans_token;
+      dispatch({ type: FETCH_TRANSACTIONS, transactions: trans_token });
+    } catch (e) {
+      showError(e.message);
+      console.log(e);
+    } finally {
+      hideLoader();
+    }
+  };
+
   const showLoader = () => dispatch({ type: SHOW_LOADER });
 
   const hideLoader = () => dispatch({ type: HIDE_LOADER });
@@ -113,12 +134,14 @@ export const UserState = ({ children }) => {
     <UserContext.Provider
       value={{
         currentUser: state.currentUser,
+        transactions: state.transactions,
         loading: state.loading,
         error: state.error,
         loginUser,
         signupUser,
         logoutUser,
-        fetchUser
+        fetchUser,
+        fetchTransactions
       }}
     >
       {children}
