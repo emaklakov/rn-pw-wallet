@@ -4,16 +4,20 @@ import { UserContext } from './context/user/userContext';
 import { LogInNavigation } from './navigation/LogInNavigation';
 import { AppNavigation } from './navigation/AppNavigation';
 
-export const MainLayout = () => {
-  const { currentUser } = useContext(UserContext);
+export class MainLayout extends React.Component {
+  static contextType = UserContext;
 
-  return (
-    <Container>
-      {currentUser && currentUser.id_token ? (
-        <AppNavigation />
-      ) : (
-        <LogInNavigation />
-      )}
-    </Container>
-  );
-};
+  render() {
+    const currentUser = this.context.currentUser;
+
+    return (
+      <Container>
+        {currentUser && currentUser.id_token ? (
+          <AppNavigation />
+        ) : (
+          <LogInNavigation />
+        )}
+      </Container>
+    );
+  }
+}

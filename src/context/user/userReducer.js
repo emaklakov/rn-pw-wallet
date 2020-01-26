@@ -2,6 +2,7 @@ import {
   LOGIN_USER,
   SIGNUP_USER,
   LOGOUT_USER,
+  FETCH_USER,
   SHOW_LOADER,
   HIDE_LOADER,
   SHOW_ERROR,
@@ -18,6 +19,10 @@ const handlers = {
     currentUser: currentUser
   }),
   [LOGOUT_USER]: state => ({ ...state, currentUser: null }),
+  [FETCH_USER]: (state, { currentUser }) => ({
+    ...state,
+    currentUser: currentUser
+  }),
   [SHOW_LOADER]: state => ({ ...state, loading: true }),
   [HIDE_LOADER]: state => ({ ...state, loading: false }),
   [CLEAR_ERROR]: state => ({ ...state, error: null }),

@@ -6,6 +6,7 @@ import {
   LOGIN_USER,
   SIGNUP_USER,
   LOGOUT_USER,
+  FETCH_USER,
   SHOW_LOADER,
   HIDE_LOADER,
   SHOW_ERROR,
@@ -72,6 +73,34 @@ export const UserState = ({ children }) => {
 
   const logoutUser = () => dispatch({ type: LOGOUT_USER });
 
+  const fetchUser = async () => {
+    showLoader();
+    clearError();
+    try {
+      const data = await Http.get(
+        'api/protected/user-info',
+        state.currentUser.id_token
+      );
+
+      const user_info_token = data.user_info_token;
+
+      const currentUser = {
+        id_token: state.currentUser.id_token,
+        id: user_info_token.id,
+        username: user_info_token.name,
+        email: user_info_token.email,
+        balance: user_info_token.balance
+      };
+
+      dispatch({ type: FETCH_USER, currentUser: currentUser });
+    } catch (e) {
+      showError(e.message);
+      console.log(e);
+    } finally {
+      hideLoader();
+    }
+  };
+
   const showLoader = () => dispatch({ type: SHOW_LOADER });
 
   const hideLoader = () => dispatch({ type: HIDE_LOADER });
@@ -88,7 +117,8 @@ export const UserState = ({ children }) => {
         error: state.error,
         loginUser,
         signupUser,
-        logoutUser
+        logoutUser,
+        fetchUser
       }}
     >
       {children}

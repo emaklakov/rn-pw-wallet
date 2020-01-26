@@ -15,8 +15,8 @@ import { AppLoader } from '../../components/AppLoader';
 
 export const LogInScreen = ({}) => {
   const { loginUser, loading, error } = useContext(UserContext);
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [email, setEmail] = useState('evgeniy.maklakov@gmail.com');
+  const [password, setPassword] = useState('Alisa1310Pw3');
   const logIn = () => {
     loginUser(email, password);
   };

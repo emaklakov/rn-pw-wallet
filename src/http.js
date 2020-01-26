@@ -1,18 +1,18 @@
 export class Http {
   static HEADERS = { 'Content-Type': 'application/json' };
 
-  static async get(url) {
+  static async get(url, token = '') {
     try {
-      return await request(url, 'GET');
+      return await request(url, 'GET', null, token);
     } catch (e) {
       //console.log('Error GET', e);
       throw e;
     }
   }
 
-  static async post(url, data = {}) {
+  static async post(url, data = {}, token = '') {
     try {
-      return await request(url, 'POST', data);
+      return await request(url, 'POST', data, token);
     } catch (e) {
       //console.log('Error POST', e);
       throw e;
@@ -20,7 +20,11 @@ export class Http {
   }
 }
 
-async function request(url, method = 'GET', data) {
+async function request(url, method = 'GET', data, token = '') {
+  if (token) {
+    Http.HEADERS['Authorization'] = 'Bearer ' + token;
+  }
+
   const config = {
     method,
     headers: Http.HEADERS
