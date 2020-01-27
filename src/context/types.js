@@ -2,6 +2,7 @@ export const LOGIN_USER = 'LOGIN_USER';
 export const SIGNUP_USER = 'SIGNUP_USER';
 export const LOGOUT_USER = 'LOGOUT_USER';
 export const FETCH_USER = 'FETCH_USER';
+export const FETCH_USERS = 'FETCH_USERS';
 export const ADD_TRANSACTION = 'ADD_TRANSACTION';
 export const FETCH_TRANSACTIONS = 'FETCH_TRANSACTIONS';
 export const SHOW_LOADER = 'SHOW_LOADER';

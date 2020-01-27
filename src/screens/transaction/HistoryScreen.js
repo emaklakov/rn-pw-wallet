@@ -8,11 +8,6 @@ import { AppLoader } from '../../components/AppLoader';
 export class HistoryScreen extends React.Component {
   constructor(props) {
     super(props);
-
-    //const { navigation } = this.props;
-    //this.focusListener = navigation.addListener('didFocus', () => {
-    //	  this.loadHistory();
-    //});
   }
 
   static contextType = UserContext;
@@ -40,16 +35,6 @@ export class HistoryScreen extends React.Component {
     if (this.context.loading) {
       return <AppLoader />;
     }
-
-    const DATA = [
-      {
-        amount: -1,
-        balance: 499,
-        date: '1/26/2020, 2:23:03 PM',
-        id: 3,
-        username: 'MV Test 1'
-      }
-    ];
 
     if (transactions && transactions.length > 0) {
       transactions.sort((a, b) => {

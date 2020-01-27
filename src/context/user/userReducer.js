@@ -3,6 +3,7 @@ import {
   SIGNUP_USER,
   LOGOUT_USER,
   FETCH_USER,
+  FETCH_USERS,
   FETCH_TRANSACTIONS,
   SHOW_LOADER,
   HIDE_LOADER,
@@ -23,6 +24,10 @@ const handlers = {
   [FETCH_USER]: (state, { currentUser }) => ({
     ...state,
     currentUser
+  }),
+  [FETCH_USERS]: (state, { users }) => ({
+    ...state,
+    users
   }),
   [FETCH_TRANSACTIONS]: (state, { transactions }) => ({
     ...state,
