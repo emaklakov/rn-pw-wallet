@@ -8,11 +8,8 @@ import {
   Input,
   Label,
   ListItem,
-  CardItem,
   Icon,
-  Form,
-  List,
-  Body
+  Form
 } from 'native-base';
 import { UserContext } from '../../context/user/userContext';
 import { LogOutButton } from '../../components/LogOutButton';
@@ -34,10 +31,19 @@ export class CreateScreen extends React.Component {
   };
 
   componentDidMount() {
+    const { clearError } = this.context;
     const { navigation } = this.props;
     this.focusListener = navigation.addListener('willFocus', () => {
       console.log('Create focusListener');
-      //this.selectUser('');
+
+      let nUsername = navigation
+        .dangerouslyGetParent()
+        .getParam('username', null);
+      let nAmount = navigation.dangerouslyGetParent().getParam('amount', '');
+      console.log(nUsername);
+      this.setState({ selectedUser: nUsername });
+      this.setState({ amount: nAmount });
+      clearError();
     });
   }
 
@@ -74,7 +80,12 @@ export class CreateScreen extends React.Component {
     };
 
     let usersList = <Text></Text>;
-    if (this.context.users && this.context.users.length > 0) {
+    if (
+      this.state.selectedUser &&
+      this.state.selectedUser != '' &&
+      this.context.users &&
+      this.context.users.length > 0
+    ) {
       usersList = this.context.users.map((item, i) => {
         return (
           <ListItem
@@ -100,14 +111,20 @@ export class CreateScreen extends React.Component {
               value={this.state.selectedUser}
             />
           </Item>
-          {this.context.users && this.context.users.length > 0 ? (
+          {this.state.selectedUser &&
+          this.state.selectedUser != '' &&
+          this.context.users &&
+          this.context.users.length > 0 ? (
             <View style={{ backgroundColor: '#ffffff' }}>{usersList}</View>
           ) : (
             usersList
           )}
           <Item floatingLabel>
             <Label>Amount</Label>
-            <Input onChangeText={text => this.setState({ amount: text })} />
+            <Input
+              onChangeText={text => this.setState({ amount: text })}
+              value={this.state.amount.toString()}
+            />
           </Item>
           {loading ? (
             <Button block disabled style={styles.send}>
@@ -131,7 +148,8 @@ export class CreateScreen extends React.Component {
 
 const styles = StyleSheet.create({
   content: {
-    flex: 1
+    flex: 1,
+    backgroundColor: '#ffffff'
   },
   send: {
     marginTop: 45

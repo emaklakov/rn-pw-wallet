@@ -4,11 +4,7 @@
     "slug": "PWWallet",
     "privacy": "public",
     "sdkVersion": "36.0.0",
-    "platforms": [
-      "ios",
-      "android",
-      "web"
-    ],
+    "platforms": ["ios", "android", "web"],
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -20,11 +16,16 @@
     "updates": {
       "fallbackToCacheTimeout": 0
     },
-    "assetBundlePatterns": [
-      "**/*"
-    ],
+    "assetBundlePatterns": ["**/*"],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "pro.maklakov.pwwallet",
+      "buildNumber": "1.0.0"
+    },
+    "android": {
+      "package": "pro.maklakov.pwwallet",
+      "versionCode": 1,
+      "permissions": []
     }
   }
 }

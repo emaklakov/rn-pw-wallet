@@ -1,4 +1,5 @@
 import React, { useReducer, useContext } from 'react';
+import { Toast } from 'native-base';
 import { Http } from '../../http';
 import { UserContext } from './userContext';
 import { userReducer } from './userReducer';
@@ -117,6 +118,7 @@ export const UserState = ({ children }) => {
 
       dispatch({ type: FETCH_USERS, users: data });
     } catch (e) {
+      dispatch({ type: FETCH_USERS, users: [] });
       showError(e.message);
       console.log(e);
     } finally {
@@ -135,6 +137,11 @@ export const UserState = ({ children }) => {
 
       if (data && data.trans_token && data.trans_token.id) {
         navigation.navigate('Info');
+        Toast.show({
+          text: 'Payment successful send!',
+          buttonText: 'Ok',
+          type: 'success'
+        });
       }
     } catch (e) {
       showError(e.message);
@@ -156,6 +163,7 @@ export const UserState = ({ children }) => {
       const trans_token = data.trans_token;
       dispatch({ type: FETCH_TRANSACTIONS, transactions: trans_token });
     } catch (e) {
+      dispatch({ type: FETCH_TRANSACTIONS, transactions: [] });
       showError(e.message);
       console.log(e);
     } finally {
@@ -185,7 +193,8 @@ export const UserState = ({ children }) => {
         fetchUser,
         fetchUsers,
         addTransaction,
-        fetchTransactions
+        fetchTransactions,
+        clearError
       }}
     >
       {children}

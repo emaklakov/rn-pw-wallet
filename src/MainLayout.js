@@ -1,5 +1,5 @@
-import React, { useContext } from 'react';
-import { Container } from 'native-base';
+import React from 'react';
+import { Root, Container } from 'native-base';
 import { UserContext } from './context/user/userContext';
 import { LogInNavigation } from './navigation/LogInNavigation';
 import { AppNavigation } from './navigation/AppNavigation';
@@ -11,13 +11,15 @@ export class MainLayout extends React.Component {
     const currentUser = this.context.currentUser;
 
     return (
-      <Container>
-        {currentUser && currentUser.id_token ? (
-          <AppNavigation />
-        ) : (
-          <LogInNavigation />
-        )}
-      </Container>
+      <Root>
+        <Container>
+          {currentUser && currentUser.id_token ? (
+            <AppNavigation />
+          ) : (
+            <LogInNavigation />
+          )}
+        </Container>
+      </Root>
     );
   }
 }

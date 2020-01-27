@@ -13,7 +13,10 @@ export class MainScreen extends React.Component {
 
   render() {
     return (
-      <Content padder style={styles.content}>
+      <Content
+        padder
+        contentContainerStyle={{ justifyContent: 'center', flex: 1 }}
+      >
         <View style={styles.contentTitle}>
           <Text style={styles.title}>PW Wallet</Text>
         </View>
@@ -39,9 +42,6 @@ export class MainScreen extends React.Component {
 }
 
 const styles = StyleSheet.create({
-  content: {
-    flex: 1
-  },
   contentImage: {
     justifyContent: 'center',
     alignItems: 'center',

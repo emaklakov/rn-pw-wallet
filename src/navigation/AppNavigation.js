@@ -40,7 +40,7 @@ const BottomNavigator = createBottomTabNavigator({
       tabBarIcon: info => (
         <Ionicons
           name='ios-add-circle-outline'
-          size={20}
+          size={25}
           color={info.tintColor}
         />
       ),

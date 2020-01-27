@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import { UserContext } from '../../context/user/userContext';
 import { StyleSheet, View } from 'react-native';
 import {
@@ -14,9 +14,14 @@ import {
 import { AppLoader } from '../../components/AppLoader';
 
 export const LogInScreen = ({}) => {
-  const { loginUser, loading, error } = useContext(UserContext);
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const { loginUser, loading, error, clearError } = useContext(UserContext);
+  const [email, setEmail] = useState('evgeniy.maklakov@gmail.com');
+  const [password, setPassword] = useState('Alisa1310Pw3');
+
+  useEffect(() => {
+    clearError();
+  }, []);
+
   const logIn = () => {
     loginUser(email, password);
   };
@@ -26,20 +31,40 @@ export const LogInScreen = ({}) => {
   }
 
   return (
-    <Content padder style={styles.content}>
+    <Content
+      padder
+      contentContainerStyle={{ justifyContent: 'center', flex: 1 }}
+    >
       <Form>
         <Item floatingLabel>
           <Label>Email</Label>
-          <Input value={email} onChangeText={setEmail} />
+          <Input
+            value={email}
+            onChangeText={setEmail}
+            autoCapitalize='none'
+            autoCompleteType='email'
+            keyboardType='email-address'
+          />
         </Item>
         <Item floatingLabel>
           <Label>Password</Label>
-          <Input value={password} onChangeText={setPassword} />
+          <Input
+            value={password}
+            onChangeText={setPassword}
+            secureTextEntry={true}
+          />
         </Item>
-        <Button block onPress={logIn} style={styles.login}>
-          <Icon name='ios-log-in' />
-          <Text>Log In</Text>
-        </Button>
+        {email && password ? (
+          <Button block onPress={logIn} style={styles.login}>
+            <Icon name='ios-log-in' />
+            <Text>Log In</Text>
+          </Button>
+        ) : (
+          <Button block disabled style={styles.login}>
+            <Icon name='ios-log-in' />
+            <Text>Log In</Text>
+          </Button>
+        )}
       </Form>
       <View style={styles.errorContent}>
         <Text style={styles.errorText}>{error}</Text>
@@ -53,9 +78,6 @@ LogInScreen.navigationOptions = {
 };
 
 const styles = StyleSheet.create({
-  content: {
-    flex: 1
-  },
   login: {
     marginTop: 45
   },

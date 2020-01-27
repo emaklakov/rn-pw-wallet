@@ -1,6 +1,6 @@
 import React from 'react';
-import { StyleSheet } from 'react-native';
-import { Content, Card, CardItem, Text, Body } from 'native-base';
+import { View, StyleSheet } from 'react-native';
+import { Content, Card, CardItem, Text, Body, Button, Icon } from 'native-base';
 import { LogOutButton } from '../../components/LogOutButton';
 import { UserContext } from '../../context/user/userContext';
 import { AppLoader } from '../../components/AppLoader';
@@ -32,23 +32,50 @@ export class InfoScreen extends React.Component {
   render() {
     const currentUser = this.context.currentUser;
 
-    if (this.context.loading || !currentUser.balance) {
+    if (this.context.loading) {
       return <AppLoader />;
+    }
+
+    if (this.context.error) {
+      return (
+        <Content
+          padder
+          contentContainerStyle={{ justifyContent: 'center', flex: 1 }}
+        >
+          <View style={styles.errorContent}>
+            <Text style={styles.errorText}>{this.context.error}</Text>
+            <Button
+              block
+              onPress={() => {
+                this.loadInfo;
+              }}
+              style={{ marginTop: 25 }}
+            >
+              <Icon name='refresh-ccw' type='Feather' />
+              <Text>Update</Text>
+            </Button>
+          </View>
+        </Content>
+      );
     }
 
     return (
       <Content padder style={styles.content}>
-        <Card>
-          <CardItem header bordered style={styles.balanceItem}>
-            <Text style={styles.balanceTitle}>{currentUser.balance}</Text>
-          </CardItem>
-          <CardItem bordered>
-            <Body>
-              <Text style={styles.usernameTitle}>{currentUser.username}</Text>
-              <Text style={styles.emailTitle}>{currentUser.email}</Text>
-            </Body>
-          </CardItem>
-        </Card>
+        {currentUser.balance ? (
+          <Card>
+            <CardItem header bordered style={styles.balanceItem}>
+              <Text style={styles.balanceTitle}>{currentUser.balance}</Text>
+            </CardItem>
+            <CardItem bordered>
+              <Body>
+                <Text style={styles.usernameTitle}>{currentUser.username}</Text>
+                <Text style={styles.emailTitle}>{currentUser.email}</Text>
+              </Body>
+            </CardItem>
+          </Card>
+        ) : (
+          <Text></Text>
+        )}
       </Content>
     );
   }
@@ -69,5 +96,14 @@ const styles = StyleSheet.create({
   },
   emailTitle: {
     color: '#bbbbbb'
+  },
+  errorContent: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+  errorText: {
+    fontSize: 20,
+    color: 'red'
   }
 });

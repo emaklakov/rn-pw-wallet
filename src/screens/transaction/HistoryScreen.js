@@ -1,6 +1,15 @@
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
-import { Content, Text, List, ListItem, Body, Right } from 'native-base';
+import {
+  Content,
+  Text,
+  List,
+  ListItem,
+  Body,
+  Right,
+  Button,
+  Icon
+} from 'native-base';
 import { LogOutButton } from '../../components/LogOutButton';
 import { UserContext } from '../../context/user/userContext';
 import { AppLoader } from '../../components/AppLoader';
@@ -15,6 +24,14 @@ export class HistoryScreen extends React.Component {
   static navigationOptions = {
     headerTitle: 'History',
     headerRight: () => <LogOutButton />
+  };
+
+  repeatTransaction = (username, amount) => {
+    amount = Math.abs(amount);
+    this.props.navigation.navigate('Create', {
+      username: username,
+      amount: amount
+    });
   };
 
   loadHistory() {
@@ -36,6 +53,29 @@ export class HistoryScreen extends React.Component {
       return <AppLoader />;
     }
 
+    if (this.context.error) {
+      return (
+        <Content
+          padder
+          contentContainerStyle={{ justifyContent: 'center', flex: 1 }}
+        >
+          <View style={styles.errorContent}>
+            <Text style={styles.errorText}>{this.context.error}</Text>
+            <Button
+              block
+              onPress={() => {
+                this.loadHistory;
+              }}
+              style={{ marginTop: 25 }}
+            >
+              <Icon name='refresh-ccw' type='Feather' />
+              <Text>Update</Text>
+            </Button>
+          </View>
+        </Content>
+      );
+    }
+
     if (transactions && transactions.length > 0) {
       transactions.sort((a, b) => {
         if (a.id > b.id) return -1;
@@ -44,7 +84,7 @@ export class HistoryScreen extends React.Component {
       });
 
       return (
-        <View>
+        <View style={{ backgroundColor: '#ffffff' }}>
           <List
             dataArray={transactions}
             renderItem={({ item }) => {
@@ -55,6 +95,21 @@ export class HistoryScreen extends React.Component {
                     <Text note>
                       Amount: {item.amount} | Balance: {item.balance}
                     </Text>
+                    <Button
+                      small
+                      success
+                      bordered
+                      style={{
+                        marginTop: 10,
+                        justifyContent: 'center',
+                        width: '50%'
+                      }}
+                      onPress={() => {
+                        this.repeatTransaction(item.username, item.amount);
+                      }}
+                    >
+                      <Text>Repeat</Text>
+                    </Button>
                   </Body>
                   <Right>
                     <Text note>{item.date}</Text>
@@ -68,7 +123,7 @@ export class HistoryScreen extends React.Component {
       );
     } else {
       return (
-        <Content style={styles.content}>
+        <Content padder style={styles.content}>
           <View>
             <Text>No transactions</Text>
           </View>
@@ -83,5 +138,14 @@ const styles = StyleSheet.create({
     flex: 1
   },
   item: {},
-  username: {}
+  username: {},
+  errorContent: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+  errorText: {
+    fontSize: 20,
+    color: 'red'
+  }
 });

@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import { UserContext } from '../../context/user/userContext';
 import { StyleSheet, View } from 'react-native';
 import {
@@ -14,11 +14,15 @@ import {
 import { AppLoader } from '../../components/AppLoader';
 
 export const SignUpScreen = ({}) => {
-  const { signupUser, loading, error } = useContext(UserContext);
+  const { signupUser, loading, error, clearError } = useContext(UserContext);
   const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [passwordc, setPasswordc] = useState('');
+
+  useEffect(() => {
+    clearError();
+  }, []);
 
   const signUp = () => {
     signupUser(username, email, password);
@@ -29,7 +33,10 @@ export const SignUpScreen = ({}) => {
   }
 
   return (
-    <Content padder style={styles.content}>
+    <Content
+      padder
+      contentContainerStyle={{ justifyContent: 'center', flex: 1 }}
+    >
       <Form>
         <Item floatingLabel>
           <Label>Username</Label>
@@ -37,20 +44,41 @@ export const SignUpScreen = ({}) => {
         </Item>
         <Item floatingLabel>
           <Label>Email</Label>
-          <Input value={email} onChangeText={setEmail} />
+          <Input
+            value={email}
+            onChangeText={setEmail}
+            autoCapitalize='none'
+            autoCompleteType='email'
+            keyboardType='email-address'
+          />
         </Item>
         <Item floatingLabel>
           <Label>Password</Label>
-          <Input value={password} onChangeText={setPassword} />
+          <Input
+            value={password}
+            onChangeText={setPassword}
+            secureTextEntry={true}
+          />
         </Item>
         <Item floatingLabel>
           <Label>Password Confirm</Label>
-          <Input value={passwordc} onChangeText={setPasswordc} />
+          <Input
+            value={passwordc}
+            onChangeText={setPasswordc}
+            secureTextEntry={true}
+          />
         </Item>
-        <Button block onPress={signUp} style={styles.login}>
-          <Icon name='ios-person-add' />
-          <Text>Sign Up</Text>
-        </Button>
+        {username && email && password && passwordc && password == passwordc ? (
+          <Button block onPress={signUp} style={styles.login}>
+            <Icon name='ios-person-add' />
+            <Text>Sign Up</Text>
+          </Button>
+        ) : (
+          <Button block disabled style={styles.login}>
+            <Icon name='ios-person-add' />
+            <Text>Sign Up</Text>
+          </Button>
+        )}
       </Form>
       <View style={styles.errorContent}>
         <Text style={styles.errorText}>{error}</Text>
@@ -64,9 +92,6 @@ SignUpScreen.navigationOptions = {
 };
 
 const styles = StyleSheet.create({
-  content: {
-    flex: 1
-  },
   login: {
     marginTop: 45
   },
